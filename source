@@ -1,0 +1,117 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApplication2
+{
+    class Program
+    {
+        //8 bit = 1 byte
+        //1 hexbit = 4 bit
+        //2 hexbit = 8 bit = 1 byte
+        private static int stringToInt(List<char> gelenList)
+        {
+            int cevrilen;
+            string gelenString = string.Join("", gelenList.ToArray());
+            string binary = HexToBinary(gelenString);
+            int gelenbyte = binary.Count()/8;
+
+            if (Int32.TryParse(gelenString, out cevrilen))
+                return cevrilen;
+            else
+                return 0;
+        }
+
+        public static string HexToBinary(string hexValue)
+        {
+            ulong number = UInt64.Parse(hexValue, System.Globalization.NumberStyles.HexNumber);
+
+            byte[] bytes = BitConverter.GetBytes(number);
+
+            string binaryString = string.Empty;
+            foreach (byte singleByte in bytes)
+            {
+                binaryString += Convert.ToString(singleByte, 2);
+            }
+
+            return binaryString;
+        }
+
+        static void Main(string[] args)
+        {
+            
+            int sira=0,ebcdic;
+            string gelen = "404040400066F9F6F0F00106201607240000000538492016082400000005384920160924000000053849201610240000000538492016112400000005384920161224000000053849F3F5F956F05100000032309400000001924600000000096200000000288600017515000500";
+            List<char> alinan = new List<char>();
+            while (true)
+            {
+                alinan.Add(gelen[sira]);
+                
+                if (sira == 7)//ilk 8 hexbiti 4 byte
+                {
+                    ebcdic = Program.stringToInt(alinan);
+                    alinan.Clear();
+                }
+                else if (sira == 14)//8byte 
+                {
+                    ebcdic = Program.stringToInt(alinan);
+                    alinan.Clear();
+                    
+                }
+                else if (sira == 10)//10byte
+                {
+                    ebcdic = Program.stringToInt(alinan);
+                    alinan.Clear();
+                    
+                }
+                else if (sira == 10)//10byte
+                {
+                    ebcdic = Program.stringToInt(alinan);
+                    alinan.Clear();
+                   
+                }
+                else if (sira == 10)//7byte
+                {
+                    ebcdic = Program.stringToInt(alinan);
+                    alinan.Clear();
+                   
+                }
+                else if (sira == 10)//20byte
+                {
+                    ebcdic = Program.stringToInt(alinan);
+                    alinan.Clear();
+                    
+                }
+                else if (sira == 10)//6byte
+                {
+                    ebcdic = Program.stringToInt(alinan);
+                    alinan.Clear();
+                   
+                }
+                else if (sira == 10)//20byte
+                {
+                    ebcdic = Program.stringToInt(alinan);
+                    alinan.Clear();
+
+                }
+                else if (sira == 10)//6byte
+                {
+                    ebcdic = Program.stringToInt(alinan);
+                    alinan.Clear();
+
+                }
+
+                sira++;
+            }
+            Console.WriteLine(ebcdic);
+        }
+
+    
+
+    
+
+        
+    }
+}
